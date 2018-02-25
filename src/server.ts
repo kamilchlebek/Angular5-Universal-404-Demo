@@ -1,42 +1,41 @@
 import 'reflect-metadata';
 import 'zone.js/dist/zone-node';
-
-// replace platform-server renderer import:
-// import { renderModuleFactory } from '@angular/platform-server'
-// with express-engine renderer imported here:
-import {ngExpressEngine} from '@nguniversal/express-engine';
-
-import {enableProdMode} from '@angular/core'
-import {join} from 'path';
-// import {readFileSync} from 'fs';
+import { renderModuleFactory } from '@angular/platform-server';
+import {REQUEST, RESPONSE} from '@nguniversal/express-engine/tokens';
+import { enableProdMode, ValueProvider } from '@angular/core';
 import * as express from 'express';
+import { join } from 'path';
+import { readFileSync } from 'fs';
 
 enableProdMode();
 
-const PORT = process.env.PORT || 4200;
+const PORT = 4200;
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
 const app = express();
 
-const {AppServerModuleNgFactory} = require('main.server');
+const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
+const { AppServerModuleNgFactory } = require('main.server');
 
-// replace call to renderer factory below
-//
-// const template = readFileSync(join(DIST_FOLDER, 'browser', 'simple-page.html')).toString();
-// app.engine('html', (_, options, callback) => {
-// const opts = {document: template, url: options.req.url};
-//
-//     renderModuleFactory(AppServerModuleNgFactory, opts)
-//         .then(html => callback(null, html));
-// });
+app.engine('html', (_, options, callback) => {
+    const opts = {
+        document: template,
+        url: options.req.url,
+        extraProviders: [
+            // make req and response accessible when angular app runs on server
+            <ValueProvider>{
+                provide: REQUEST,
+                useValue: options.req
+            },
+            <ValueProvider>{
+                provide: RESPONSE,
+                useValue: options.req.res,
+            },
+        ]};
 
-// to ngExpress renderer
-app.engine('html', ngExpressEngine(
-    {
-        bootstrap: AppServerModuleNgFactory, // Give it a module to bootstrap
-    }));
-
-app.set('view engine', 'html');
+    renderModuleFactory(AppServerModuleNgFactory, opts)
+        .then(html => callback(null, html));
+});
 
 app.set('view engine', 'html');
 app.set('views', 'src');
@@ -44,10 +43,7 @@ app.set('views', 'src');
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
 
 app.get('*', (req, res) => {
-// Pass res to render function: replace this:
-//     res.render('index', {req});
-// to this:
-    res.render('index', {req, res});
+    res.render('index', { req });
 });
 
 app.listen(PORT, () => {

@@ -7,6 +7,7 @@ import {Four04Component, Four04Module} from './four04/four04.component';
 import {SimplePageComponent, SimplePageModule} from './simple-page/simple-page.component';
 import {RouterModule, Routes} from '@angular/router';
 import {ServerResponseService} from './services/server-response';
+import {HttpClientModule} from '@angular/common/http';
 
 const appRoutes: Routes = [
     {path: '', component: SimplePageComponent},
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
                   BrowserModule.withServerTransition({ appId: 'universal-demo-v5' }),
                   SimplePageModule,
                   Four04Module,
+                  HttpClientModule
               ],
               providers: [InjectionService, ServerResponseService],
               bootstrap: [AppComponent]
