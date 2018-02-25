@@ -1,18 +1,31 @@
 import {Component, NgModule, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
+export interface JsonplacePost {
+    id: number;
+    userId: number;
+    title: string;
+    body: string
+};
+
 @Component(
     {
         selector: 'app-index',
-        template: `<h1>This is a simple page component</h1><h2>It sets a normal 200 status</h2>`
+        templateUrl: 'simple-page.template.html'
     })
 
-export class SimplePageComponent implements OnInit{
-    constructor(private http: HttpClient) {}
+export class SimplePageComponent implements OnInit {
+    public jsonInput: JsonplacePost = {id: 0, userId: 0, title: '', body: ''};
+
+    constructor(private http: HttpClient) {
+    }
 
     ngOnInit() {
-        this.http.get('http://api.infogan.co.il/api/comment?post=FfS2VmezufmEBo4cQ3JAbD')
-            .subscribe((data) => console.log(data));
+        this.http.get<JsonplacePost>('http://jsonplaceholder.typicode.com/posts/1')
+            .subscribe((data: JsonplacePost) => {
+                this.jsonInput = data;
+                console.log('SimplePageComponent', data);
+            });
     }
 }
 

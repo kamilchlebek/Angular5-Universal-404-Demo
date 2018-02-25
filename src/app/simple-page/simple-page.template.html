@@ -1,0 +1,48 @@
+<h1>This is a simple page component</h1>
+<h2>It sets a normal 200 status</h2>
+
+<h2>Input from http request on 'http://jsonplaceholder.typicode.com/posts/1'</h2>
+<h3 style="width: 200px;word-wrap: break-word;">{{jsonInput.title}}</h3>
+<p style="width: 200px;word-wrap: break-word;">{{jsonInput.body}}</p>
+
+
+<h2>Checking</h2>
+<p  style="width: 800px;word-wrap: break-word;">
+    Please check network activity and verify you see server side network activity
+    displayed using console log and client side network activity using browser developer tools
+</p>
+<p style="width: 800px;word-wrap: break-word;">
+    You should use a non js browser such as curl. With curl you should use the -i option to get it display the response header.
+    <br>
+    $ curl -i http://localhost:4200/four04 | head
+    <br>
+    % Total&emsp;    % Received&emsp; % Xferd&emsp;  Average Speed&emsp;   Time&emsp;    Time&emsp;     Time&emsp;  Current
+    <br>
+    &ensp;&ensp;&ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Dload&emsp;  Upload&emsp;   Total&emsp;   Spent&emsp;    Left  Speed
+    <br>
+    &emsp;100&emsp;  3357&emsp;  100&emsp;  3357&emsp;    0&emsp;     0&emsp;  32443&emsp;      0 --:--:-- --:--:-- --:--:--&emsp; 32592
+    <br>
+    HTTP/1.1 404 The page was not found
+    <br>
+    X-Powered-By: Express
+    <br>
+    Content-Type: text/html; charset=utf-8
+    <br>
+    Content-Length: 3357
+    <br>
+    ETag: W/"d1d-ElYDbNrgb0PxpJiNW21+dQkLy4k"
+    <br>
+    Date: Sun, 17 Dec 2017 16:19:20 GMT
+    <br>
+    Connection: keep-alive
+    <br>
+
+    <br>
+    &lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;&lt;head&gt;
+    <br>
+    &lt;meta charset="utf-8"&gt;
+    <br>
+    &lt;title&gt;UniversalDemoV5&lt;/title&gt;
+    <br>
+    &lt;base href="/"&gt;
+</p>

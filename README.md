@@ -19,8 +19,7 @@ browser such as curl to see the outcome.
 3. Add request to load nguniversal/express-engine in package.json (line "@nguniversal/express-engine": "^5.0.0-beta.5")
 4. Update server.ts as following:  
     4.1 Add import: import {ngExpressEngine} from '@nguniversal/express-engine';  
-    4.2 Replace renderModuleFactory with ngExpressEngine as commented in server.ts lines 23-37  
-    4.3 Add res parameter to render function calls (lines 47-50).  
+    4.2 Add extraProviders on the renderModuleFactory option object (lines 24-34)
 5. Create a service as explained on [npm @nguniversal/express-engine](https://www.npmjs.com/package/@nguniversal/express-engine)
 6. When an error is detected on a page call a service method to alter the page header and status
 
@@ -29,7 +28,7 @@ browser such as curl to see the outcome.
 ### Checking:
 You should use a non js browser such as curl. With curl you should use the -i option to get it display the response header.
 ```
-$ curl -i http://localhost:4200/four04 | less
+$ curl -i http://localhost:4200/four04 | head
      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                     Dload  Upload   Total   Spent    Left  Speed
    100  3357  100  3357    0     0  32443      0 --:--:-- --:--:-- --:--:-- 32592
